@@ -1,0 +1,510 @@
+2003-12-12  Theodore A. Roth  <troth@openavr.org>
+
+	* Release version 2.2.
+
+2003-12-12  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Set version to 2.2.
+
+2003-12-08  Theodore A. Roth  <troth@openavr.org>
+
+	* src/main.cc (usage): Fix host name and port spec to denote that
+	host name, not port, is the optional part of host:port. 
+
+2003-12-08  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Kolja Waschk <avus@ixo.de>]
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/gnu_getopt.h: Protect against cygwin having already included 
+	getop.h.
+	* src/jtagio.cc (timeout_read): If either select() of read() fail and
+	errno is set to EAGAIN, continue the loop instead of bombing out.
+	* src/jtagrun.cc (jtagContinue): Use timeout_read() instead of read().
+
+2003-12-06  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* avarice.spec.in (%files): Add avarice man page.
+	* doc/Makefile.am (man_MANS): Add avarice.1.
+	(EXTRA_DIST): Remove install.txt.
+	* doc/avarice.1: New file.
+	* doc/install.txt: Remove file. This file talks about Aegis being the
+	build system which is no longer true since we use autoconf/automake.
+	* doc/running.txt: Add note about this file being out of date.
+	* doc/todo.txt: Remove some entries that have been handled.
+	Add some new entries.
+
+2003-11-16  Theodore A. Roth  <troth@openavr.org>
+[Thanks to Nils Kristian Strom <nilsst@omegav.ntnu.no>]
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/jtag.h (initJtagBox): Change arguments (no args needed).
+	(initJtagOnChipDebugging): New prototype.
+	(jtagReadFuses): Ditto.
+	* src/jtagio.cc (initJtagBox): Change arguments and move attach code
+	to initJtagOnChipDebugging function.
+	(initJtagOnChipDebugging): New function.
+	* src/jtagrw.cc (jtagReadFuses): New function.
+	* src/main.cc (main): Avoid disabling lock bits and setting FUSE_OCDEN
+	when we are using avarice as a standalone device programmer.
+	Move --write-fuses in front of the jtag debugger initialization, to
+	make it possible to start debugging with all fuses written to their
+	proper settings.
+
+2003-11-16  Theodore A. Roth  <troth@openavr.org>
+[Thanks to Nils Kristian Strom <nilsst@omegav.ntnu.no>]
+
+	* src/jtag.h (jtagDisplayFuses): Add prototype.
+	* src/jtagio.cc (initJtagBox): Use jtagDisplayFuses() instead of
+	calling statusOut() directly.
+	* src/jtagrw.cc (jtagWriteFuses): Ditto.
+	(jtagDisplayFuses): New function.
+
+2003-11-13  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/jtagrw.cc (memorySpace): Use symbolic name instead of magic
+	number.
+	* src/remote.cc (talkToGdb): Only allow orphaned bytes when writing to
+	program space. [Thanks to Brian Cuthie <brian@systemix.com> for 
+	reporting this bug.]
+
+2003-11-08  Theodore A. Roth  <troth@openavr.org>
+
+	* src/main.cc (usage): Make the -B option info fit on a 80 column
+	terminal.
+
+2003-11-08  Theodore A. Roth  <troth@openavr.org>
+[Thanks to Nils Kristian Strom <nilsst@omegav.ntnu.no>]
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/jtagio.cc (initJtagBox): Inform user about the lock bits and
+	fuses that actually *are* programmed, not the ones that were found in
+	the device.
+
+2003-11-01  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/jtag.h: Add JTAG_BITRATE_1_MHz, JTAG_BITRATE_500_KHz,
+	JTAG_BITRATE_250_KHz and JTAG_BITRATE_125_KHz defs.
+	(initJtagBox): Add bitrate argument.
+	* src/jtagio.cc (initJtagBox): Allow passing the jtag bitrate.
+	* src/main.cc: Add the -B (--jtag-bitrate) option.
+
+2003-10-23  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* doc/dev_desc.txt: New file.
+	* src/jtag.h:
+	* src/jtagio.cc:
+	Make the device description arrays into a structures.
+
+2003-10-20  Theodore A. Roth  <troth@openavr.org>
+[Thanks to Dean Ferreyra <dferreyra@igc.org>]
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/main.cc: Fix to allow erasing the device as a single operation.
+
+2003-09-25  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* doc/Makefile.am (EXTRA_DIST): Add the .txt files.
+	* doc/README.cygwin: New file, from Eric Weddington.
+
+2003-09-18  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* avarice.spec.in: Add man pages.
+
+2003-09-18  Theodore A. Roth  <troth@openavr.org>
+[Thanks to Amedee Louis Beaudoin <deoxy@u.washington.edu>]
+
+	* src/jtagrw.cc (jtagWriteFuses): Enter programming mode before writing
+	and exit program mode after reading.
+	(jtagWriteLockBits): Ditto.
+
+2003-08-25  David Gay  <dgay@barnowl.research.intel-research.net>
+
+	* configure.ac: bump version
+	* src/jtagprog.cc: work around cygwin gcc (3.2.3) bug with
+	large stack allocated locals by making them static
+
+2003-08-21  David Gay  <dgay@barnowl.research.intel-research.net>
+
+	* doc/ice-insight.1: new file, ice-insight man page
+	* doc/ice-gdb.1: new file, ice-gdb man page
+	* doc/Makefile.am: new file
+	* Makefile.am (SUBDIRS): make doc subdir
+	* configure.ac: Bump revision, add doc Makefile
+
+2003-08-20  Theodore A. Roth  <troth@openavr.org>
+
+	* src/jtagrun.cc (jtagContinue): Add debug output to show what the 
+	jtag box returned, especially the break status register.
+
+2003-08-19  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac (AC_INIT): Bump version.
+	* src/jtagprog.cc (get_section_addr): Fix to allow programming of upper
+	64k of flash.
+
+2003-08-18  David Gay  <dgay@barnowl.research.intel-research.net>
+
+	* src/main.cc (main): Add missing --file option for getopt
+	  [Thanks to Mike Hudson <pontifex@isys.ca>]
+
+2003-08-15  Theodore A. Roth  <troth@openavr.org>
+
+	* Makefile.am (dist-hook): New rule.
+	* configure.ac (AC_INIT): Bump version.
+	(AC_CONFIG_FILES): Add avarice.spec.
+	* avarice.spec.in: New file.
+
+2003-08-15  Theodore A. Roth  <troth@openavr.org>
+[Thanks to Nils Kristian Strom <nilsst@omegav.ntnu.no>]
+
+	* src/main.cc (long_opts): Fix short opts to match usage output.
+
+2003-08-08  Theodore A. Roth  <troth@openavr.org>
+[Thanks to James Harris  <James.Harris@codan.com.au>]
+
+	* src/gnu_getopt.h: Define HAVE_DECL_GETOPT to fix declaration clash.
+
+2003-08-06  David Gay  <dgay@barnowl.research.intel-research.net>
+
+	* src/main.cc (main): actually implement --version
+	* configure.ac: Bump version.
+
+2003-08-05  David Gay  <dgay@barnowl.research.intel-research.net>
+
+	* scripts/start-avarice: use new host:portname syntax
+
+2003-08-05  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump version.
+	* src/Makefile.am (avarice_SOURCES): Add gnu_getopt* files.
+	* src/avarice.h: Delete DEFAULT_PORT.
+	* src/gnu_getopt.c: New file.
+	* src/gnu_getopt.h: New file.
+	* src/gnu_getopt1.c: New file.
+	* src/main.cc: Use gnu getop_long() to parse argv.
+	Clean up usage() output to be more compact.
+	Allow operations (program, erase, verify, write-fuses, etc) to be 
+	performed before going into gdb server mode.
+	Change "[[hostname] port]" options into a single "[[host]:port]"
+	option where ":port" causes avarice to enter server mode.
+	All options now have short and long equivalents.
+
+2003-08-04  Theodore A. Roth  <troth@openavr.org>
+
+	* src/main.cc: Revert program flag to default to false.
+	Revert setting program flag to false if --verify is given.
+
+2003-07-31  David Gay  <dgay@intel-research.net>
+
+	* src/main.cc (main): when no gdb interaction: don't perform
+	extraneous enableProgramming/disableProgramming
+	when gdb interaction: program if a file specified
+	* scripts/gdb-avarice-script: set hardware watch/break limits
+	* scripts/ice-gdb.in: --ignore-intr should not capture,
+	--external flag
+	* scripts/start-avarice: no need for avr-objcopy
+
+2003-07-29  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump version.
+	Search for library needed for inet_aton().
+
+2003-07-25  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump Version
+	* src/jtagio.cc: Double all of the vectors_end initializers.
+
+2003-07-24  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump version.
+	* src/jtagprog.cc (initImage): Fix off by one in for loop.
+	(jtag_create_image): Clean up for loop to use common idiom.
+	(jtag_flash_image): Clean up for loop to use common idiom.
+	When verifying, verify all bytes instead of bombing out at first error.
+	* src/main.cc (usage): Add info for verify option.
+
+2003-07-24  Theodore A. Roth  <troth@openavr.org>
+
+	* src/jtagprog.cc (jtag_create_image): Fix off by one error.
+
+2003-07-10  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Nils Kristian Strom  <nilsst@omegav.ntnu.no>]
+
+	* src/jtag.h:
+	* src/jtagprog.cc:
+	* src/main.cc:
+	Add verification of program and data after downloading to device.
+
+2003-07-10  Theodore A. Roth  <troth@openavr.org>
+
+	* doc/todo.txt: Update todo list.
+
+2003-07-10  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Joerg Wunsch <joerg_wunsch@uriah.heep.sax.de>]
+
+	* configure.ac: Bump version.
+	* src/avarice.h: Define DEFAULT_PORT.
+	* src/main.cc: Have host default to listening on any interface and 
+	port default to DEFAULT_PORT (4242).
+
+2003-07-07  David Gay  <dgay@intel-research.net>
+
+	* src/jtag.h: Add vectors_end to jtag_device_def_type.
+	* src/jtagio.cc: Add vectors_end values to device initializers.
+	* src/remote.cc: Use vectors_end when ignoring interrupts.
+
+2003-07-07  David Gay  <dgay@intel-research.net>
+
+	* src/jtagio.cc: Better fix, comment for device id problem.
+
+2003-07-07  David Gay  <dgay@intel-research.net>
+
+	* src/jtagio.cc: Fix problem with --capture and reading device id.
+
+2003-07-03  David Gay  <dgay@intel-research.net>
+
+	* src/jtagio.cc: Check pointer before passing to strcmp().
+	Update comment for JTAG bitrate.
+	* src/jtagprog.cc: Fix a spelling error.
+	Move "." status out of jtagWrite back to download.
+	* src/jtagrw.cc: Move "." status out of jtagWrite back to download.
+	* src/main.cc: Reset remote target after download (debugging won't work
+	without that reset).
+	* src/remote.cc: Extend interrupt ignore stuff to singlestep, makes it
+	much more useable in gdb. Still need to find extent of interrupt table
+	based on device id.
+
+2003-07-02  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Jake McGuire <jake@boom.net>]
+
+	* src/jtagio.cc: Add support for mega64.
+
+2003-07-02  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Joerg Wunsch <joerg_wunsch@uriah.heep.sax.de>]
+
+	* configure.ac: Bump version.
+	* src/jtagprog.cc: SEC_ARCH_BIT_0 and SEC_THREAD_LOCAL are not
+	available on some older bfd libraries.
+	* src/main.cc: BSD always requires the inclusion of <sys/types.h>
+	before <sys/socket.h>.
+	(initSocketAddress): struct sockaddr_in in 4.4BSD contains some padding
+	at the end in a struct field named sin_zero which needs zero'ed out.
+
+2003-06-13  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump version.
+	* src/jtagio.cc: Set JTAG_P_CLOCK param to 0xff instead of 0xfd to
+	speed things up a little bit.
+	* src/remote.cc: Remove a debug output statement.
+
+2003-06-12  Theodore A. Roth  <troth@openavr.org>
+
+	* doc/todo.txt: Remove some items that have been fixed or are now
+	working.
+
+2003-06-12  Theodore A. Roth  <troth@openavr.org>
+
+	* src/jtagrw.cc (jtagWrite): Print debug message if addr or length is
+	odd.
+	* src/remote.cc (reportStatusExtended): New function for replying with
+	a 'T' packet instead of an 'S' packet.
+	Use new function whenever a breakpoint is hit from a step or continue
+	command from gdb.
+
+2003-06-12  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump version.
+	* src/remote.cc: Remove call to interruptProgram() when handling a 'g'
+	packet. This was accidently committed and should not have been since
+	it causes the jtagice box to corrupt the program counter. Not good.
+
+2003-06-11  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Bump version.
+	* src/jtagio.cc: Remove check failure for jtag ice HW version.
+	* src/remote.cc: Fix handling the 'M' command from GDB to allow for
+	odd addresses and lengths.
+
+2003-06-05  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Check for intl library since linking to bfd may
+	require it (this affects cygwin). [Thanks Colid O'Flynn for reporting
+	this.]
+
+2003-05-04  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Alan Willis <willisa@erols.com>.]
+
+	* src/jtagprog.cc: Speed up programming the flash by skipping pages
+	that are all ones.
+
+2003-05-04  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Nils Kristian Strom  <nilsst@omegav.ntnu.no>]
+
+	* src/main.cc: Allow all programmer-operations (erase device,
+	write memory, write fuses, write lockbits) in one pass.
+
+2003-05-04  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.ac: Check for libbfd and libiberty, complain if either is
+	missing.
+	Bump version.
+	* src/jtagio.cc: When opening the jtagice device, give a more helpful 
+	failure message.
+
+2003-05-04  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Nils Kristian Strom  <nilsst@omegav.ntnu.no>]
+
+	* src/jtag.h:
+	* src/jtagprog.cc:
+	* src/jtagrw.cc:
+	Use the bfd library for handling multiple input file formats.
+
+2003-05-01  Theodore A. Roth  <troth@openavr.org>
+
+	* src/jtagrw.cc: Fix byte order problem when specifying fuses bytes 
+	on the command line.
+
+2003-04-20  Theodore A. Roth  <troth@openavr.org>
+
+	* AUTHORS: Fix a typo.
+	* INSTALL-FROM-CVS: Add detailed description about using the proper
+	versions of autoconf and automake.
+	* configure.ac: Ran autoscan to generate this file to check for more
+	potential portability problem points.
+	Use autoconf-2.57 and automake-1.7.3 (trying make things work right
+	with any versions is a royal PITA).
+	Have autoheader generate src/autoconf.hin instead of autoconf.h.in so
+	8.3 systems don't puke.
+	* configure.in: Removed (replaced by configure.ac).
+	* .cvsignore: Ignore all diff and patch files.
+	Ignore all autom4te*.cache dirs.
+	* src/.cvsignore: Ignore TAGS and tags files.
+	Ignore autoconf.hin instead of autoconf.h.in.
+
+2003-04-03  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Nils Kristian Strom <nilsst@omegav.ntnu.no>].
+
+	* configure.in: Bump version.
+	* src/jtag.h:
+	* src/jtagrw.cc:
+	* src/main.cc:
+	Add support for writing the lockbits from the command line.
+
+2003-04-02  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Nils Kristian Strom <nilsst@omegav.ntnu.no>].
+
+	* src/jtag.h:
+	* src/jtagrw.cc:
+	* src/main.cc:
+	Add support for writing fuses from the command line.
+
+2003-04-02  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Nils Kristian Strom <nilsst@omegav.ntnu.no>].
+
+	* configure.in: Bump version.
+	* src/main.cc: Move #include <unistd.h> to fix a build failure on
+	FreeBSD.
+
+2003-04-01  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Jake McGuire <jake@boom.net>]
+
+	* src/main.cc: Ports should be printed as unsigned values instead of
+	signed.
+
+2003-04-01  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.in: Add check for socklen_t type.
+
+2003-04-01  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Jake McGuire <jake@boom.net>]
+
+	* configure.in: Bump version.
+	* src/jtagio.cc: Don't set serial speed by changing termios structure
+	since this breaks on OS X. Use cfsetospeed() and cfsetispeed().
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+
+	* configure.in: Add checks for libsocket and libnsl.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+[Contributed by James Harris <James.Harris@codan.com.au>]
+
+	* src/jtag.h: Lengthen JTAG_RESPONSE_TIMEOUT so slower systems have
+	a fair chance to respond.
+	* src/remote.cc: Passing an int to read(2) is not bigendian friendly,
+	so pass an unsigned char instead.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+
+	* src/remote.cc: Add handling of 'C' packet. Using 'sig SIGHUP' command
+	from gdb will cause avarice to reset the user program.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+
+	* Bootstrap: Remove need to run autotools in src.
+	* configure.in: Remove need for src/configure.in.
+	* src/configure.in: Remove file.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+[Contributed by James Harris <James.Harris@codan.com.au>]
+
+	* src/Makefile.am (avarice_SOURCES): Add ioreg.cc and ioreg.h.
+	* src/ioreg.cc: New file.
+	* src/ioreg.h: New file.
+	* src/jtag.h: Add io_reg_defs field to jtag_device_def_type struct.
+	* src/jtagio.cc: Add io_reg_defs field initializers.
+	* src/remote.cc: Add 'q' packet handling of "Ravr.io_reg" queries.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+
+	* src/remote.cc: Break out of 'g' packet case if an error occurs.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+[Contributed by James Harris <James.Harris@codan.com.au>]
+
+	* src/remote.cc: When handling a 'g' packet, only read the 32 GPR's,
+	SPL, SPH, and SREG. Reading some other io registers can have side
+	effects.
+
+2003-03-27  Theodore A. Roth  <troth@openavr.org>
+[Contributed by James Harris <James.Harris@codan.com.au>]
+
+	* src/jtag.h: Remove unused deviceType enum.
+	* src/jtagprog.cc: Tell the jtagbox the device dependant flash and
+	eeprom pagesizes based on device definition info.
+
+2003-03-26  Theodore A. Roth  <troth@openavr.org>
+[Contributed by Jeff Rose <rosejn@Colorado.EDU>]
+
+	* src/jtagio.cc (getJtagResponse): Use JTAG_RESPONSE_TIMEOUT instead
+	of JTAG_COMM_TIMEOUT when reading the response from the jtag box.
+	* src/main.cc: Don't require hostname and portnumber options if they
+	aren't needed.
+
+2003-03-25  Theodore A. Roth  <troth@openavr.org>
+[Contributed by James Harris <James.Harris@codan.com.au>]
+
+	* src/jtag.h: Add jtag_device_def_type structure.
+	Add various missing jtag values.
+	* src/jtagio.cc: Add auto detection and configuration of target device.
+	Always report jtag box hw and sw versions.
+	* src/main.cc: Add --part command line option.
+
+2003-03-17  Theodore A. Roth  <troth@openavr.org>
+
+	* Bootstrap: Add "-a -c" to second call to automake so depcomp will be
+	installed if it is missing.
+
+2003-02-28  Theodore A. Roth  <troth@openavr.org>
+
+	* AUTHORS: New file.
+	* Bootstrap: Allow user to specify which versions of the auto tools
+	to use by setting environment variables.
+	* ChangeLog: New file.
+
